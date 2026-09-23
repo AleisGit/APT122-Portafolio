@@ -1,0 +1,26 @@
+Póliza;Empresa;Rubro;Ramo;Aseguradora;Asegurados;Prima anual ($);Comisión (%);Comisión anual ($);Siniestralidad 3T 2026 (%);Variación (pp);Siniestralidad 12 meses (%);Nivel;Próxima renovación;Días a la renovación
+POL-3242;Energía Magallanes SpA;Energía;Salud;Seguros Cordillera;132;101679000;10,5;10676295;98,1;-0,2;98,2;Crítico;2026-10-03;3
+POL-5549;Energía Aysén SpA;Energía;Dental;Aseguradora Norte;149;12560000;10,3;1293680;84,4;1,8;79,2;Alto;2026-10-05;5
+POL-1025;Minera Lircay;Minería;Salud;Seguros Cordillera;32;23012000;8,3;1909996;80,0;7,1;69,7;Alto;2026-11-11;42
+POL-9497;Constructora Cautín SpA;Construcción;Salud;Aseguradora Norte;297;141118000;6,6;9313788;80,8;8,9;71,7;Alto;2026-11-21;52
+POL-8985;Buses Aconcagua;Transporte y logística;Salud;Seguros Cordillera;81;41567000;8,9;3699463;78,9;5,5;77,6;Alto;2026-12-11;72
+POL-2735;Transportes Atacama SpA;Transporte y logística;Salud;Aseguradora Norte;116;68102000;8,1;5516262;77,6;2,8;72,8;Alto;2027-01-22;114
+POL-1998;Distribuidora Magallanes Ltda.;Comercio;Dental;Aseguradora Norte;297;29433000;7,5;2207475;87,6;5,8;81,2;Alto;2027-02-06;129
+POL-4685;Telecomunicaciones Biobío;Tecnología;Salud;Aseguradora Norte;16;8401000;9,7;814897;82,1;19,0;70,2;Alto;2027-02-09;132
+POL-5105;Telecomunicaciones Copiapó;Tecnología;Salud;Mutual del Sur;119;79030000;6,1;4820830;96,3;0,4;90,6;Crítico;2027-03-06;157
+POL-4984;Logística Cautín Ltda.;Transporte y logística;Salud;Aseguradora Norte;22;11538000;10,3;1188414;75,3;-13,3;71,9;Alto;2027-03-09;160
+POL-7304;Logística Rapel SpA;Transporte y logística;Salud;Seguros Cordillera;126;68077000;8,7;5922699;78,6;18,3;67,0;Alto;2027-03-09;160
+POL-8999;Agroindustrial Angol SpA;Alimentos;Salud;Mutual del Sur;83;47738000;7,1;3389398;102,7;-2,8;100,1;Crítico;2027-03-28;179
+POL-6855;Transportes Maipo S.A.;Transporte y logística;Salud;Mutual del Sur;152;91979000;7,0;6438530;85,9;3,3;85,1;Alto;2027-03-28;179
+POL-2765;Servicios Mineros Cautín;Minería;Dental;Seguros Cordillera;26;2865000;8,1;232065;76,4;-5,4;72,6;Alto;2027-04-02;184
+POL-5777;Ingeniería Aysén S.A.;Construcción;Salud;Aseguradora Norte;33;16365000;7,5;1227375;105,3;10,0;95,4;Crítico;2027-04-03;185
+POL-9094;Laboratorio Petorca;Salud;Salud;Aseguradora Norte;2514;1304941000;6,8;88735988;79,5;-2,1;78,8;Alto;2027-04-24;206
+POL-6332;Minera Linares;Minería;Dental;Seguros Cordillera;127;13184000;10,1;1331584;75,7;-0,4;75,7;Alto;2027-04-28;210
+POL-6364;Buses Itata;Transporte y logística;Dental;Previsión Austral;43;3809000;6,9;262821;78,2;11,4;70,2;Alto;2027-07-03;276
+POL-7277;Eléctrica Cachapoal SpA;Energía;Salud;Aseguradora Norte;135;62121000;7,1;4410591;75,0;5,0;70,1;Alto;2027-07-19;292
+POL-9103;Constructora Elqui S.A.;Construcción;Salud;Seguros Cordillera;14;6305000;8,9;561145;92,8;20,7;71,2;Alto;2027-08-03;307
+POL-5336;Tecnologías Biobío Ltda.;Tecnología;Dental;Mutual del Sur;32;2910000;6,3;183330;79,9;14,6;66,3;Alto;2027-08-09;313
+POL-7683;Logística Rapel SpA;Transporte y logística;Dental;Seguros Cordillera;84;8209000;9,7;796273;85,6;4,8;81,4;Alto;2027-08-11;315
+POL-3814;Servicios Atacama;Servicios;Dental;Previsión Austral;36;3545000;9,0;319050;77,4;-0,6;75,7;Alto;2027-08-16;320
+POL-5705;Agroindustrial Rapel SpA;Alimentos;Salud;Mutual del Sur;373;192635000;8,7;16759245;86,1;-0,8;87,0;Alto;2027-08-16;320
+POL-3255;Frutícola Pirque Ltda.;Alimentos;Dental;Seguros Cordillera;22;1725000;10,3;177675;84,4;7,3;75,4;Alto;2027-09-24;359

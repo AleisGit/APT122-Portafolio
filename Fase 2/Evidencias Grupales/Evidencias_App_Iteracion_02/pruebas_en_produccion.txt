@@ -1,0 +1,41 @@
+Pruebas automáticas en navegador (Microsoft Edge headless) contra la aplicación publicada
+URL: https://main.dxy8n76gfjww9.amplifyapp.com
+Fecha: 23-09-2026 19:51 (hora de Chile)
+Commit desplegado: 816726e
+
+== Flujo de acceso (herramientas/prueba-login.mjs)
+  OK   sin sesión, /dashboard redirige al login  (/login?volverA=%2Fdashboard)
+  OK   una contraseña corta no deja entrar  (La contraseña debe tener al menos 8 caracteres.)
+  OK   las credenciales entran directo al dashboard  (/dashboard)
+  OK   con sesión, /login redirige al dashboard  (/dashboard)
+  OK   cerrar sesión vuelve a la portada  (/)
+  OK   después de salir, /dashboard vuelve a pedir login  (/login?volverA=%2Fdashboard)
+  OK   ?volverA=//otro-sitio no redirige fuera  (https://main.dxy8n76gfjww9.amplifyapp.com/dashboard)
+
+  todas las comprobaciones pasaron
+
+== Listas, fichas, exportación y recuperación (herramientas/prueba-listas.mjs)
+  OK   la lista muestra 20 pólizas por página  (20 filas)
+  OK   la paginación cuenta las 189 pólizas
+  OK   el filtro de nivel queda en la URL  (/polizas?nivel=sobre-umbral)
+  OK   sobre el umbral hay 25, igual que en el resumen
+  OK   buscar 'energia' encuentra 'Energía' sin importar la tilde  (10 resultados)
+  OK   la búsqueda queda en la URL  (/polizas?q=energia)
+  OK   una búsqueda sin coincidencias muestra el estado vacío
+  OK   quitar los filtros limpia también el buscador  (buscador "", /polizas)
+  OK   y el buscador no vuelve a filtrar solo  (/polizas)
+  OK   ordenar por prima queda en la URL  (/polizas?orden=prima&dir=desc)
+  OK   las primas quedan de mayor a menor  (1305, 454, 335)
+  OK   la página 2 conserva el orden  (/polizas?orden=prima&dir=desc&pagina=2)
+  OK   la fila abre la ficha de la póliza  (/polizas/POL-4752 vs /polizas/POL-4752)
+  OK   en la ficha, la barra lateral marca Pólizas  (Pólizas)
+  OK   la miga de pan vuelve a la lista  (/polizas)
+  OK   el filtro de región deja solo empresas del Biobío  (13 empresas)
+  OK   una póliza que no existe muestra el 404
+  OK   el CSV trae las 25 pólizas sobre el umbral más el encabezado  (26 líneas)
+  OK   sin sesión, la lista pide login  (/login?volverA=/polizas?nivel=critico&ramo=Salud)
+  OK   después de entrar vuelve a la lista con los mismos filtros  (/polizas?nivel=critico&ramo=Salud)
+  OK   recuperar rechaza un correo mal escrito
+  OK   recuperar confirma sin revelar si la cuenta existe
+
+  todas las comprobaciones pasaron
