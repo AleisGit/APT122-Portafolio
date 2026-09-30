@@ -39,11 +39,20 @@ Tomadas desde la aplicación publicada, en una ventana de 1440 px de ancho y en 
 
 ## Video
 
-`13_video_prueba_interfaz.mp4` (2 min 50 s, 1920x1080): la prueba guiada grabada el 30-09-2026 sobre la aplicación
-publicada. Recorre 13 pasos con mouse y teclado reales, muestra un rótulo por paso con la marca de cada comprobación
-y termina con 12 de 12 comprobaciones aprobadas: inicio de sesión y su validación, resumen, lista filtrada, búsqueda,
-orden y páginas, fichas de póliza y de empresa, filtro por región, exportación CSV, cierre de sesión y recuperación
-de acceso.
+`13_video_prueba_interfaz.mp4` (3 min 14 s, 1920x1080): la prueba guiada de la interfaz, grabada el 30-09-2026 con
+la aplicación al cierre de la iteración 03, compilada para producción en un servidor local y con una base de datos
+nueva. Recorre 16 pasos con mouse y teclado, muestra un rótulo por paso con la marca de cada comprobación y termina
+con 15 de 15 comprobaciones aprobadas:
+
+- Inicio de sesión: una contraseña inválida no deja entrar y las credenciales válidas entran al resumen.
+- La base parte con dos empresas y la cartera en 70,0 %. Desde el formulario se registra una tercera, Constructora
+  Pacífico S.A., con el cálculo en vivo de cada trimestre (70,0 %, 80,0 %, 90,0 % y 100,0 %), y aparece en la
+  lista como EMP-0003.
+- El resumen sube a 80,0 % (+6,7 pp) con una póliza sobre el umbral; la lista filtrada y el CSV muestran la misma.
+- Búsqueda sin tildes, orden por prima anual, ficha de póliza, filtro por región, cierre de sesión y recuperación
+  de acceso.
+
+Reemplaza al video anterior, que recorría la versión con datos sintéticos.
 
 ## Pruebas
 
