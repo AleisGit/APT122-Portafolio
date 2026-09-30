@@ -1,7 +1,7 @@
 # Evidencias de la aplicación, iteración 02
 
 Equipo 3: Guillermo Mora, José Montesino y Pablo Pinto.
-Fecha de las evidencias: 23-09-2026.
+Fecha de las evidencias: 23-09-2026; el video es del 30-09-2026.
 
 **Aplicación publicada:** https://main.dxy8n76gfjww9.amplifyapp.com
 
@@ -16,7 +16,8 @@ invitación).
 - **Publicado:** la interfaz del DSS completa, con datos sintéticos de 142 empresas, 189 pólizas y 11 trimestres
   de historia. Tienen la misma estructura póliza por trimestre que tendrá la base de datos.
 - **En curso:** la conexión con PostgreSQL, el formulario para ingresar el registro D y el proceso de cálculo al
-  guardar, que son el foco de la iteración 02. El detalle está en la ficha de avance de la carpeta superior.
+  guardar, que son el foco de la iteración 02. El detalle está en la ficha de avance 02, en
+  `Evidencia Proyecto/Fichas_Iteración`.
 
 ## Capturas
 
@@ -35,6 +36,14 @@ Tomadas desde la aplicación publicada, en una ventana de 1440 px de ancho y en 
 | `09_ficha_empresa_EMP-0097.png` | Ficha de una empresa con tres pólizas: la siniestralidad de cada una y su detalle |
 | `10_acceso_denegado_403.png` | Pantalla de acceso denegado por rol |
 | `11_resumen_celular.png` y `12_polizas_celular.png` | Vista en celular |
+
+## Video
+
+`13_video_prueba_interfaz.mp4` (2 min 50 s, 1920x1080): la prueba guiada grabada el 30-09-2026 sobre la aplicación
+publicada. Recorre 13 pasos con mouse y teclado reales, muestra un rótulo por paso con la marca de cada comprobación
+y termina con 12 de 12 comprobaciones aprobadas: inicio de sesión y su validación, resumen, lista filtrada, búsqueda,
+orden y páginas, fichas de póliza y de empresa, filtro por región, exportación CSV, cierre de sesión y recuperación
+de acceso.
 
 ## Pruebas
 

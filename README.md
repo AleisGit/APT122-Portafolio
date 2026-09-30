@@ -22,13 +22,13 @@ Fase 1/
     ├── 1.5_GuiaEstudiante_Fase 1_Definicion Proyecto APT (Español)
     └── 1.5_GuiaEstudiante_Fase 1_Definicion Proyecto APT (Inglés, optativo)
 
-Fase 2/
-├── Evidencias Individuales/
-└── Evidencias Grupales/
-    ├── Ficha_Avance_02_Proyecto_Capstone_Equipo3.docx
-    └── Evidencias_App_Iteracion_02/
-        ├── README.md               índice de las evidencias y estado de la iteración
-        ├── 01 a 12 (capturas)      pantallas de la aplicación publicada
-        ├── pruebas_en_produccion.txt
-        └── polizas_sobre_umbral_3T-2026.csv
+Evidencia Proyecto/
+├── Fichas_Iteración/
+│   └── Ficha_Avance_02_Proyecto_Capstone_Equipo3.docx
+└── Evidencias_App_Iteracion_02/
+    ├── README.md               índice de las evidencias y estado de la iteración
+    ├── 01 a 12 (capturas)      pantallas de la aplicación publicada
+    ├── 13_video_prueba_interfaz.mp4
+    ├── pruebas_en_produccion.txt
+    └── polizas_sobre_umbral_3T-2026.csv
 ```
