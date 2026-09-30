@@ -1,0 +1,63 @@
+Caso de prueba: salida del sistema
+Fecha: 30-09-2026. Commit: 8af945a. Navegador: Microsoft Edge headless.
+
+Comprobaciones: 11 de 11 aprobadas
+  OK    La aplicación abre el resumen de la cartera  (/dashboard)
+  OK    El resumen parte en 70,0 %, con 2 empresas y ninguna póliza sobre el umbral
+  OK    La base tiene 2 empresas: Transportes Andes SpA y Alimentos del Sur Ltda.  (2 empresas)
+  OK    Sin datos no se guarda: cada campo obligatorio queda marcado  (16 campos marcados)
+  OK    El cálculo en vivo da 70,0 %, 80,0 %, 90,0 % y 100,0 %; en 12 meses, 85,0 %  (70,0 %, 80,0 %, 90,0 %, 100,0 %; 12 meses 85,0 %)
+  OK    Con un nombre repetido no se guarda y el resto de los datos se conserva
+  OK    La empresa queda registrada en la base como EMP-0003  (/empresas/EMP-0003?nueva=1)
+  OK    La ficha muestra 100,0 % en 3T 2026, nivel crítico, y 85,0 % en los últimos 12 meses
+  OK    El resumen sube de 70,0 % a 80,0 % (+6,7 pp) y marca 1 póliza sobre el umbral
+  OK    La lista filtrada muestra solo POL-1003, de Constructora Pacífico S.A.  (1 póliza: POL-1003)
+  OK    Tras reiniciar, la base conserva las 3 empresas  (3 empresas)
+
+Consultas a la base al terminar la prueba
+
+== Empresas
+select codigo, nombre, rubro, region, trabajadores from empresa order by id;
+
+codigo    nombre                      rubro                   region         trabajadores
+--------  --------------------------  ----------------------  -------------  ------------
+EMP-0001  Transportes Andes SpA       Transporte y logística  Metropolitana  120
+EMP-0002  Alimentos del Sur Ltda.     Alimentos               Biobío         80
+EMP-0003  Constructora Pacífico S.A.  Construcción            Valparaíso     75
+
+== Pólizas
+select p.numero, e.nombre as empresa, p.ramo, p.aseguradora, p.asegurados, p.comision_pct from poliza p join empresa e on e.id = p.empresa_id order by p.id;
+
+numero    empresa                     ramo    aseguradora         asegurados  comision_pct
+--------  --------------------------  ------  ------------------  ----------  ------------
+POL-1001  Transportes Andes SpA       Salud   Aseguradora Norte   100         8.0
+POL-1002  Alimentos del Sur Ltda.     Dental  Seguros Cordillera  70          10.0
+POL-1003  Constructora Pacífico S.A.  Salud   Mutual del Sur      60          8.0
+
+== Trimestres (la siniestralidad la calcula la base)
+select p.numero, t.periodo, t.prima_devengada, t.siniestros_incurridos, t.siniestralidad from poliza_periodo t join poliza p on p.id = t.poliza_id order by p.id, t.id;
+
+numero    periodo  prima_devengada  siniestros_incurridos  siniestralidad
+--------  -------  ---------------  ---------------------  --------------
+POL-1001  4T 2025  4000000          2400000                0.6000
+POL-1001  1T 2026  4000000          2600000                0.6500
+POL-1001  2T 2026  4000000          2600000                0.6500
+POL-1001  3T 2026  4000000          2800000                0.7000
+POL-1002  4T 2025  1000000          500000                 0.5000
+POL-1002  1T 2026  1000000          550000                 0.5500
+POL-1002  2T 2026  1000000          650000                 0.6500
+POL-1002  3T 2026  1000000          700000                 0.7000
+POL-1003  4T 2025  2500000          1750000                0.7000
+POL-1003  1T 2026  2500000          2000000                0.8000
+POL-1003  2T 2026  2500000          2250000                0.9000
+POL-1003  3T 2026  2500000          2500000                1.0000
+
+== Siniestralidad de la cartera por trimestre
+select periodo, sum(siniestros_incurridos) as siniestros, sum(prima_devengada) as prima, round(sum(siniestros_incurridos)::numeric / sum(prima_devengada), 4) as siniestralidad from poliza_periodo group by periodo order by min(id);
+
+periodo  siniestros  prima    siniestralidad
+-------  ----------  -------  --------------
+4T 2025  4650000     7500000  0.6200
+1T 2026  5150000     7500000  0.6867
+2T 2026  5500000     7500000  0.7333
+3T 2026  6000000     7500000  0.8000
