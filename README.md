@@ -22,6 +22,10 @@ Fase 1/
     ├── 1.5_GuiaEstudiante_Fase 1_Definicion Proyecto APT (Español)
     └── 1.5_GuiaEstudiante_Fase 1_Definicion Proyecto APT (Inglés, optativo)
 
+Fase 2/
+└── Evidencias Grupales/
+    └── 2.4_GuiaEstudiante_Fase 2_DesarrolloProyecto APT_G3.docx
+
 Evidencia Proyecto/
 ├── Fichas_Iteración/
 │   ├── Ficha_Avance_Proyecto_Capstone_1Alu.docx
