@@ -1,0 +1,75 @@
+Pruebas de la API (pytest) contra PostgreSQL 17
+Fecha: 05-11-2026. Commit de la aplicación: d043847.
+Las pruebas crean y migran su propia base (buk_learning_test); cada una corre en una transacción que se deshace al terminar.
+
+============================= test session starts =============================
+platform win32 -- Python 3.14.2, pytest-9.1.1, pluggy-1.6.0 -- C:\Projects\Personal Projects\buk-learning\backend\.venv\Scripts\python.exe
+rootdir: C:\Projects\Personal Projects\buk-learning\backend
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.15.1
+collecting ... collected 61 items
+
+tests/test_auth.py::test_el_login_entrega_un_token_y_yo_dice_quien_es PASSED [  1%]
+tests/test_auth.py::test_un_rol_de_empresa_trae_su_empresa_y_menos_permisos PASSED [  3%]
+tests/test_auth.py::test_credenciales_malas_responden_igual_exista_o_no_la_cuenta PASSED [  4%]
+tests/test_auth.py::test_cinco_intentos_fallidos_bloquean_la_cuenta PASSED [  6%]
+tests/test_auth.py::test_sin_token_o_con_uno_falso_pide_iniciar_sesion PASSED [  8%]
+tests/test_auth.py::test_desactivar_a_un_miembro_cierra_su_sesion PASSED [  9%]
+tests/test_auth.py::test_un_miembro_desactivado_no_entra_aunque_sepa_la_contrasena PASSED [ 11%]
+tests/test_auth.py::test_recuperar_el_acceso_con_un_enlace_de_un_solo_uso PASSED [ 13%]
+tests/test_auth.py::test_recuperar_con_un_correo_desconocido_no_lo_revela PASSED [ 14%]
+tests/test_auth.py::test_la_contrasena_nueva_debe_tener_letras_y_numeros PASSED [ 16%]
+tests/test_auth.py::test_cambiar_la_propia_contrasena PASSED             [ 18%]
+tests/test_cartera.py::test_el_resumen_de_la_cartera_de_una_empresa PASSED [ 19%]
+tests/test_cartera.py::test_la_cartera_de_una_empresa_trae_su_siniestralidad_y_sus_polizas PASSED [ 21%]
+tests/test_cartera.py::test_soporte_ve_la_cartera_de_una_empresa_como_sus_usuarios PASSED [ 22%]
+tests/test_cartera.py::test_un_rol_de_empresa_no_pide_la_cartera_de_otra PASSED [ 24%]
+tests/test_cartera.py::test_un_rol_de_empresa_ve_el_resumen_de_su_empresa PASSED [ 26%]
+tests/test_cartera.py::test_los_catalogos_traen_la_ventana_y_el_umbral PASSED [ 27%]
+tests/test_cartera.py::test_el_nivel_se_clasifica_con_la_precision_que_se_muestra[0.6374-bajo] PASSED [ 29%]
+tests/test_cartera.py::test_el_nivel_se_clasifica_con_la_precision_que_se_muestra[0.6375-observacion] PASSED [ 31%]
+tests/test_cartera.py::test_el_nivel_se_clasifica_con_la_precision_que_se_muestra[0.7495-alto] PASSED [ 32%]
+tests/test_cartera.py::test_el_nivel_se_clasifica_con_la_precision_que_se_muestra[0.9374-alto] PASSED [ 34%]
+tests/test_cartera.py::test_el_nivel_se_clasifica_con_la_precision_que_se_muestra[0.9375-critico] PASSED [ 36%]
+tests/test_cartera.py::test_la_ventana_es_el_ultimo_anio_cerrado PASSED  [ 37%]
+tests/test_cartera.py::test_la_renovacion_es_el_aniversario_siguiente_al_cierre PASSED [ 39%]
+tests/test_cartera.py::test_redondear_lleva_la_mitad_hacia_arriba PASSED [ 40%]
+tests/test_empresas.py::test_soporte_ve_todas_con_su_equipo_y_los_roles_de_empresa_solo_la_suya PASSED [ 42%]
+tests/test_empresas.py::test_la_ficha_de_una_empresa_trae_sus_datos_y_su_equipo PASSED [ 44%]
+tests/test_empresas.py::test_las_opciones_para_los_selectores_respetan_el_alcance PASSED [ 45%]
+tests/test_empresas.py::test_una_empresa_de_otro_cliente_no_existe PASSED [ 47%]
+tests/test_empresas.py::test_registrar_una_empresa_sin_polizas_ni_equipo PASSED [ 49%]
+tests/test_empresas.py::test_el_rut_se_valida_y_ni_el_rut_ni_el_nombre_se_repiten PASSED [ 50%]
+tests/test_empresas.py::test_solo_soporte_registra_empresas PASSED       [ 52%]
+tests/test_empresas.py::test_el_administrador_de_empresa_edita_la_suya PASSED [ 54%]
+tests/test_empresas.py::test_los_trabajadores_no_bajan_de_los_asegurados_de_sus_polizas PASSED [ 55%]
+tests/test_empresas.py::test_eliminar_una_empresa_se_lleva_sus_polizas_y_miembros PASSED [ 57%]
+tests/test_empresas.py::test_filtros_y_orden_de_la_lista PASSED          [ 59%]
+tests/test_miembros.py::test_soporte_ve_a_todos_y_el_de_empresa_solo_a_los_suyos PASSED [ 60%]
+tests/test_miembros.py::test_el_asistente_no_ve_a_los_miembros PASSED    [ 62%]
+tests/test_miembros.py::test_filtrar_por_rol_estado_y_empresa PASSED     [ 63%]
+tests/test_miembros.py::test_invitar_a_un_asistente_y_que_cree_su_contrasena PASSED [ 65%]
+tests/test_miembros.py::test_el_administrador_de_empresa_no_crea_cuentas_de_soporte_ni_miembros_de_otra_empresa PASSED [ 67%]
+tests/test_miembros.py::test_un_rol_de_empresa_necesita_empresa_y_el_correo_no_se_repite PASSED [ 68%]
+tests/test_miembros.py::test_datos_mal_escritos_marcan_cada_campo PASSED [ 70%]
+tests/test_miembros.py::test_un_miembro_de_otra_empresa_no_existe_para_el_administrador_de_empresa PASSED [ 72%]
+tests/test_miembros.py::test_nadie_cambia_su_propio_rol_ni_se_elimina PASSED [ 73%]
+tests/test_miembros.py::test_cambiar_el_rol_cierra_la_sesion_abierta PASSED [ 75%]
+tests/test_miembros.py::test_soporte_mueve_a_un_miembro_de_empresa PASSED [ 77%]
+tests/test_miembros.py::test_soporte_invita_al_administrador_de_una_empresa PASSED [ 78%]
+tests/test_miembros.py::test_quitar_a_un_miembro PASSED                  [ 80%]
+tests/test_miembros.py::test_un_enlace_nuevo_es_de_recuperacion_si_ya_tiene_contrasena PASSED [ 81%]
+tests/test_miembros.py::test_los_roles_con_sus_permisos_y_cuantos_miembros_tienen PASSED [ 83%]
+tests/test_polizas.py::test_el_caso_del_video_agregar_y_corregir_una_poliza PASSED [ 85%]
+tests/test_polizas.py::test_los_asegurados_no_superan_a_los_trabajadores PASSED [ 86%]
+tests/test_polizas.py::test_se_registran_los_cuatro_trimestres_del_analisis PASSED [ 88%]
+tests/test_polizas.py::test_montos_y_fechas_invalidos_marcan_su_campo PASSED [ 90%]
+tests/test_polizas.py::test_los_roles_de_empresa_solo_tocan_las_polizas_de_su_empresa PASSED [ 91%]
+tests/test_polizas.py::test_el_asistente_no_elimina_polizas_y_el_administrador_de_empresa_si PASSED [ 93%]
+tests/test_polizas.py::test_soporte_elige_la_empresa_de_la_poliza PASSED [ 95%]
+tests/test_polizas.py::test_soporte_corrige_y_elimina_polizas_de_cualquier_empresa PASSED [ 96%]
+tests/test_polizas.py::test_lista_con_filtros_orden_y_resumen PASSED     [ 98%]
+tests/test_polizas.py::test_exportar_la_lista_en_csv_para_excel PASSED   [100%]
+
+============================= 61 passed in 7.42s ==============================

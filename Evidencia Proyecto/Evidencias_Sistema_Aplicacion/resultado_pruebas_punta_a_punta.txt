@@ -1,0 +1,17 @@
+Pruebas de punta a punta (Playwright en Microsoft Edge), con la API y la interfaz compilada para producción
+Fecha: 05-11-2026. Commit de la aplicación: d043847.
+Cada corrida crea sus propios datos y los elimina al terminar.
+
+
+Running 8 tests using 1 worker
+
+  ok 1 e2e\cartera.spec.ts:43:5 › el login rechaza credenciales malas (1.5s)
+  ok 2 e2e\cartera.spec.ts:51:5 › soporte entra a las empresas, sin la cartera en su menú (1.8s)
+  ok 3 e2e\cartera.spec.ts:64:5 › soporte registra una empresa e invita a su administradora (5.2s)
+  ok 4 e2e\cartera.spec.ts:92:5 › la administradora agrega una póliza a su empresa y la corrige (6.4s)
+  ok 5 e2e\cartera.spec.ts:130:5 › soporte ve la empresa como sus usuarios y corrige la póliza desde su ficha (4.2s)
+  ok 6 e2e\cartera.spec.ts:147:5 › la administradora invita a una asistente, que solo ve su empresa (5.7s)
+  ok 7 e2e\cartera.spec.ts:172:5 › cambiar el rol de la asistente cierra su sesión (3.4s)
+  ok 8 e2e\cartera.spec.ts:188:5 › la administradora elimina la póliza y soporte elimina la empresa, con su equipo (8.6s)
+
+  8 passed (37.9s)

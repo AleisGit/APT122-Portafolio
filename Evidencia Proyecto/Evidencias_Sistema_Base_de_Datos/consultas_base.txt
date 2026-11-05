@@ -1,0 +1,177 @@
+Consultas a la base de datos de la versión 1.0
+Fecha: 05-11-2026. Commit de la aplicación: d043847. Motor: PostgreSQL 17 (docker compose del repositorio).
+Las salidas son las de psql, sin editar.
+
+== Versión del motor y migración aplicada
+select version();
+                                         version                                          
+------------------------------------------------------------------------------------------
+ PostgreSQL 17.11 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+(1 row)
+
+select version_num as migracion_actual from alembic_version;
+ migracion_actual 
+------------------
+ b03ee6a2f943
+(1 row)
+
+
+== Tablas y cantidad de filas
+select 'empresa' as tabla, count(*) as filas from empresa
+union all select 'poliza', count(*) from poliza
+union all select 'periodo_poliza', count(*) from periodo_poliza
+union all select 'miembro', count(*) from miembro
+union all select 'enlace_clave', count(*) from enlace_clave;
+     tabla      | filas 
+----------------+-------
+ empresa        |     2
+ poliza         |     3
+ periodo_poliza |    12
+ miembro        |     4
+ enlace_clave   |     0
+(5 rows)
+
+
+== Empresas (el código lo genera la base)
+select codigo, rut, nombre, rubro, region, trabajadores from empresa order by id;
+  codigo  |    rut     |         nombre          |         rubro          |    region     | trabajadores 
+----------+------------+-------------------------+------------------------+---------------+--------------
+ EMP-0001 | 76543210-3 | Transportes Andes SpA   | Transporte y logística | Metropolitana |          120
+ EMP-0002 | 77123456-9 | Alimentos del Sur Ltda. | Alimentos              | Biobío        |           80
+(2 rows)
+
+
+== Pólizas (el número lo genera la base)
+select p.numero, e.codigo as empresa, p.ramo, p.aseguradora, p.asegurados, p.comision_pct from poliza p join empresa e on e.id = p.empresa_id order by p.id;
+  numero  | empresa  |  ramo  |    aseguradora     | asegurados | comision_pct 
+----------+----------+--------+--------------------+------------+--------------
+ POL-1001 | EMP-0001 | Salud  | Aseguradora Norte  |        100 |          8.0
+ POL-1002 | EMP-0002 | Dental | Seguros Cordillera |         70 |         10.0
+ POL-1010 | EMP-0001 | Dental | Aseguradora Norte  |         10 |          8.0
+(3 rows)
+
+
+== Trimestres de cada póliza (la siniestralidad la calcula la base: siniestros / prima)
+select p.numero, t.trimestre || 'T ' || t.anio as periodo, t.prima_devengada, t.siniestros_incurridos, t.siniestralidad from periodo_poliza t join poliza p on p.id = t.poliza_id order by p.id, t.anio, t.trimestre;
+  numero  | periodo | prima_devengada | siniestros_incurridos | siniestralidad 
+----------+---------+-----------------+-----------------------+----------------
+ POL-1001 | 4T 2025 |         4000000 |               2400000 |         0.6000
+ POL-1001 | 1T 2026 |         4000000 |               2600000 |         0.6500
+ POL-1001 | 2T 2026 |         4000000 |               2600000 |         0.6500
+ POL-1001 | 3T 2026 |         4000000 |               2800000 |         0.7000
+ POL-1002 | 4T 2025 |         1000000 |                500000 |         0.5000
+ POL-1002 | 1T 2026 |         1000000 |                550000 |         0.5500
+ POL-1002 | 2T 2026 |         1000000 |                650000 |         0.6500
+ POL-1002 | 3T 2026 |         1000000 |                700000 |         0.7000
+ POL-1010 | 4T 2025 |           50000 |                 10000 |         0.2000
+ POL-1010 | 1T 2026 |           50000 |                 10000 |         0.2000
+ POL-1010 | 2T 2026 |           50000 |                 10000 |         0.2000
+ POL-1010 | 3T 2026 |           50000 |                 10000 |         0.2000
+(12 rows)
+
+
+== Siniestralidad de la cartera por trimestre
+select t.trimestre || 'T ' || t.anio as periodo, sum(t.siniestros_incurridos) as siniestros, sum(t.prima_devengada) as prima, round(sum(t.siniestros_incurridos)::numeric / sum(t.prima_devengada), 4) as siniestralidad from periodo_poliza t group by t.anio, t.trimestre order by t.anio, t.trimestre;
+ periodo | siniestros |  prima  | siniestralidad 
+---------+------------+---------+----------------
+ 4T 2025 |    2910000 | 5050000 |         0.5762
+ 1T 2026 |    3160000 | 5050000 |         0.6257
+ 2T 2026 |    3260000 | 5050000 |         0.6455
+ 3T 2026 |    3510000 | 5050000 |         0.6950
+(4 rows)
+
+
+== Miembros y roles (sin las contraseñas)
+select m.id, m.nombre, m.correo, m.rol, e.codigo as empresa, m.activo from miembro m left join empresa e on e.id = m.empresa_id order by m.id;
+ id |        nombre        |              correo               |        rol        |  empresa  | activo 
+----+----------------------+-----------------------------------+-------------------+-----------+--------
+  1 | Soporte Buk Learning | soporte@buklearning.cl            | soporte           | (ninguna) | t
+  2 | María Rojas          | maria.rojas@transportesandes.cl   | admin_empresa     | EMP-0001  | t
+  3 | Diego Fuentes        | diego.fuentes@transportesandes.cl | asistente_empresa | EMP-0001  | t
+  4 | Carla Muñoz          | carla.munoz@alimentosdelsur.cl    | admin_empresa     | EMP-0002  | t
+(4 rows)
+
+
+== Reglas de integridad que impone la base
+select conrelid::regclass as tabla, conname as restriccion, pg_get_constraintdef(oid) as definicion from pg_constraint where connamespace = 'public'::regnamespace and contype in ('c', 'u', 'f') order by 1, 2;
+     tabla      |                restriccion                |                                                                              definicion                                                                               
+----------------+-------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ empresa        | ck_empresa_nombre_minimo                  | CHECK ((length(TRIM(BOTH FROM nombre)) >= 3))
+ empresa        | ck_empresa_trabajadores_positivos         | CHECK ((trabajadores > 0))
+ empresa        | uq_empresa_codigo                         | UNIQUE (codigo)
+ empresa        | uq_empresa_rut                            | UNIQUE (rut)
+ miembro        | ck_miembro_empresa_segun_rol              | CHECK ((((rol)::text = 'soporte'::text) = (empresa_id IS NULL)))
+ miembro        | ck_miembro_rol_valido                     | CHECK (((rol)::text = ANY ((ARRAY['soporte'::character varying, 'admin_empresa'::character varying, 'asistente_empresa'::character varying])::text[])))
+ miembro        | fk_miembro_empresa_id_empresa             | FOREIGN KEY (empresa_id) REFERENCES empresa(id) ON DELETE CASCADE
+ poliza         | ck_poliza_asegurados_positivos            | CHECK ((asegurados > 0))
+ poliza         | ck_poliza_comision_en_rango               | CHECK (((comision_pct > (0)::numeric) AND (comision_pct <= (30)::numeric)))
+ poliza         | ck_poliza_ramo_valido                     | CHECK (((ramo)::text = ANY ((ARRAY['Salud'::character varying, 'Dental'::character varying, 'Vida'::character varying, 'Catastrófico'::character varying])::text[])))
+ poliza         | fk_poliza_empresa_id_empresa              | FOREIGN KEY (empresa_id) REFERENCES empresa(id) ON DELETE CASCADE
+ poliza         | uq_poliza_numero                          | UNIQUE (numero)
+ enlace_clave   | ck_enlace_clave_proposito_valido          | CHECK (((proposito)::text = ANY ((ARRAY['invitacion'::character varying, 'recuperacion'::character varying])::text[])))
+ enlace_clave   | fk_enlace_clave_miembro_id_miembro        | FOREIGN KEY (miembro_id) REFERENCES miembro(id) ON DELETE CASCADE
+ enlace_clave   | uq_enlace_clave_huella                    | UNIQUE (huella)
+ periodo_poliza | ck_periodo_poliza_prima_positiva          | CHECK ((prima_devengada > 0))
+ periodo_poliza | ck_periodo_poliza_siniestros_no_negativos | CHECK ((siniestros_incurridos >= 0))
+ periodo_poliza | ck_periodo_poliza_trimestre_valido        | CHECK (((trimestre >= 1) AND (trimestre <= 4)))
+ periodo_poliza | fk_periodo_poliza_poliza_id_poliza        | FOREIGN KEY (poliza_id) REFERENCES poliza(id) ON DELETE CASCADE
+ periodo_poliza | uq_periodo_poliza_trimestre               | UNIQUE (poliza_id, anio, trimestre)
+(20 rows)
+
+
+== La base rechaza datos inválidos (ningún intento queda guardado)
+
+-- prima en cero
+insert into periodo_poliza (poliza_id, anio, trimestre, prima_devengada, siniestros_incurridos) values (1, 2026, 4, 0, 100000);
+ERROR:  division by zero
+
+-- trimestre fuera de rango
+insert into periodo_poliza (poliza_id, anio, trimestre, prima_devengada, siniestros_incurridos) values (1, 2026, 5, 4000000, 100000);
+ERROR:  new row for relation "periodo_poliza" violates check constraint "ck_periodo_poliza_trimestre_valido"
+DETAIL:  Failing row contains (54, 1, 2026, 5, 4000000, 100000, 0.0250).
+
+-- trimestre repetido para la misma póliza
+insert into periodo_poliza (poliza_id, anio, trimestre, prima_devengada, siniestros_incurridos) values (1, 2026, 3, 4000000, 100000);
+ERROR:  duplicate key value violates unique constraint "uq_periodo_poliza_trimestre"
+DETAIL:  Key (poliza_id, anio, trimestre)=(1, 2026, 3) already exists.
+
+-- la siniestralidad no se puede escribir a mano
+update periodo_poliza set siniestralidad = 0.1 where poliza_id = 1;
+ERROR:  column "siniestralidad" can only be updated to DEFAULT
+DETAIL:  Column "siniestralidad" is a generated column.
+
+-- póliza de una empresa que no existe
+insert into poliza (empresa_id, ramo, aseguradora, asegurados, comision_pct, inicio_vigencia) values (999, 'Salud', 'Aseguradora Norte', 10, 8.0, '2026-01-01');
+ERROR:  insert or update on table "poliza" violates foreign key constraint "fk_poliza_empresa_id_empresa"
+DETAIL:  Key (empresa_id)=(999) is not present in table "empresa".
+
+-- ramo que no existe
+insert into poliza (empresa_id, ramo, aseguradora, asegurados, comision_pct, inicio_vigencia) values (1, 'Autos', 'Aseguradora Norte', 10, 8.0, '2026-01-01');
+ERROR:  new row for relation "poliza" violates check constraint "ck_poliza_ramo_valido"
+DETAIL:  Failing row contains (15, POL-1015, 1, Autos, Aseguradora Norte, 10, 8.0, 2026-01-01, 2026-11-05 07:01:53.609142+00, 2026-11-05 07:01:53.609142+00).
+
+-- cuenta de soporte asociada a una empresa
+insert into miembro (nombre, correo, rol, empresa_id) values ('Prueba', 'prueba@buklearning.cl', 'soporte', 1);
+ERROR:  new row for relation "miembro" violates check constraint "ck_miembro_empresa_segun_rol"
+DETAIL:  Failing row contains (16, Prueba, prueba@buklearning.cl, soporte, 1, null, t, 0, 0, null, null, 2026-11-05 07:01:53.609318+00, 2026-11-05 07:01:53.609318+00).
+
+-- RUT repetido
+insert into empresa (rut, nombre, rubro, region, trabajadores) values ((select rut from empresa where id = 1), 'Otra empresa', 'Transporte y logística', 'Metropolitana', 10);
+ERROR:  duplicate key value violates unique constraint "uq_empresa_rut"
+DETAIL:  Key (rut)=(76543210-3) already exists.
+
+== Cálculo al guardar un trimestre (dentro de una transacción que se deshace)
+begin;
+insert into periodo_poliza (poliza_id, anio, trimestre, prima_devengada, siniestros_incurridos) values (1, 2026, 4, 4000000, 3400000) returning poliza_id, anio, trimestre, prima_devengada, siniestros_incurridos, siniestralidad;
+ poliza_id | anio | trimestre | prima_devengada | siniestros_incurridos | siniestralidad 
+-----------+------+-----------+-----------------+-----------------------+----------------
+         1 | 2026 |         4 |         4000000 |               3400000 |         0.8500
+(1 row)
+
+rollback;
+select count(*) as trimestres_guardados from periodo_poliza;
+ trimestres_guardados 
+----------------------
+                   12
+(1 row)
+
