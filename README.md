@@ -21,9 +21,11 @@ Fase 1/
 
 Fase 2/
 └── Evidencias Grupales/
-    └── 2.4_GuiaEstudiante_Fase 2_DesarrolloProyecto APT_G3.docx
+    ├── 2.4_GuiaEstudiante_Fase 2_DesarrolloProyecto APT_G3.docx
+    └── 2.6_GuiaEstudiante_Fase 2_Informe Final Proyecto APT_G3.docx
 
 Evidencia Proyecto/
+├── Presentación Proyecto.pptx                             presentación del proyecto, Fase 2
 ├── Fichas_Iteración/
 │   ├── Ficha_Avance_01_Proyecto_Capstone_Equipo3.docx
 │   ├── Ficha_Avance_02_Proyecto_Capstone_Equipo3.docx
